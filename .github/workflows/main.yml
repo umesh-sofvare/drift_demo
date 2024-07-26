@@ -1,0 +1,42 @@
+name: build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  flutter-tests:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        flutter_version: [ dev, beta, stable ]
+        os: [ ubuntu-latest, macos-latest ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - name: Setup Flutter 3.22.3
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.3'
+          cache: true
+          cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
+          cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch: '
+      - uses: malinskiy/action-android/emulator-run-cmd@release/0.1.1
+        with:
+          cmd: flutter doctor -v
+          api: 25
+          tag: default
+          abi: x86
+      - run: sdkmanager platform-tools
+      - run: adb devices
+      - run: echo $ANDROID_HOME
+      - run: ./tool/flutter_ci_script.sh
