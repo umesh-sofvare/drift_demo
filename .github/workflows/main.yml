@@ -14,7 +14,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: amrsa1/android-emulator-workflow
 #      - uses: futureware-tech/simulator-action@v3
 #        with:
 #          model: 'iPhone 14'
@@ -23,6 +22,24 @@ jobs:
 #        uses: actions/setup-java@v1
 #        with:
 #          java-version: '12.x'
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Create and start emulator
+        run: |
+          echo "no" | avdmanager create avd -n test_emulator -k "system-images;android-29;google_apis;x86"
+          emulator -avd test_emulator -no-audio -no-window &
+
+      - name: Wait for emulator to start
+        run: |
+          adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
 
       - name: Setup Flutter 3.22.3
         uses: subosito/flutter-action@v1
