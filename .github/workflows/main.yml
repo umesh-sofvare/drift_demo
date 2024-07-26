@@ -14,9 +14,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: futureware-tech/simulator-action@v3
-        with:
-          model: 'iPhone 14'
+      - uses: amrsa1/android-emulator-workflow
+#      - uses: futureware-tech/simulator-action@v3
+#        with:
+#          model: 'iPhone 14'
 
 #      - name: Setup Java
 #        uses: actions/setup-java@v1
