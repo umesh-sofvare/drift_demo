@@ -8,7 +8,7 @@ on:
 
 jobs:
   flutter-tests:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       matrix:
         api-level: [29]
@@ -19,9 +19,6 @@ jobs:
 #      - uses: futureware-tech/simulator-action@v3
 #        with:
 #          model: 'iPhone 14'
-
-      - name: "Run UI Tests"
-        uses: vgaidarji/android-github-actions-emulator@v1.0.1
 
 #      - name: Setup Java
 #        uses: actions/setup-java@v1
@@ -34,4 +31,11 @@ jobs:
           flutter-version: '3.22.3'
 
       - run: flutter pub get
-      - run: flutter test integration_test/tests/create_tests.dart
+
+      - name: run tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          script: ./gradlew connectedCheck
+
+#      - run: flutter test integration_test/tests/create_tests.dart
