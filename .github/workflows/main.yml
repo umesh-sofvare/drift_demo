@@ -30,7 +30,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
+        uses: android-actions/setup-android
 
       - name: Create and start emulator
         run: |
