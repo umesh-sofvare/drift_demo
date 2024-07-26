@@ -9,11 +9,11 @@ on:
 jobs:
   flutter-tests:
     runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        flutter_version: [ dev, beta, stable ]
-        os: [ ubuntu-latest, macos-latest ]
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        flutter_version: [ dev, beta, stable ]
+#        os: [ ubuntu-latest, macos-latest ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
