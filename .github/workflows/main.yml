@@ -24,9 +24,10 @@ jobs:
           java-version: '12.x'
 
       - name: Setup Flutter 3.22.3
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@v1
         with:
           flutter-version: '3.22.3'
           cache: true
           cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
           cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch: '
+      - run: flutter pub get
