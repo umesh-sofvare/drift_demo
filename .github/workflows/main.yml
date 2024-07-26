@@ -7,41 +7,62 @@ on:
     branches: [ master ]
 
 jobs:
-  flutter-tests:
+#  flutter-tests:
+#    runs-on: macos-13
+#    strategy:
+#      matrix:
+#        api-level: [29]
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#
+##      - uses: futureware-tech/simulator-action@v3
+##        with:
+##          model: 'iPhone 14'
+#
+##      - name: Setup Java
+##        uses: actions/setup-java@v1
+##        with:
+##          java-version: '12.x'
+#
+#      - name: Setup Flutter 3.22.3
+#        uses: subosito/flutter-action@v1
+#        with:
+#          flutter-version: '3.22.3'
+#
+#      - run: flutter pub get
+#
+#      - name: run tests
+#        uses: reactivecircus/android-emulator-runner@v2
+#        with:
+#          api-level: 29
+#          script: flutter test integration_test/tests/create_tests.dart
+
+#      - run: flutter test integration_test/tests/create_tests.dart
+
+  android:
     runs-on: macos-13
     strategy:
       matrix:
-        api-level: [31]
+        api-level:
+          - 29
+          # you can add more API level if you want to run your tests on different API
+      fail-fast: true
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-#      - uses: futureware-tech/simulator-action@v3
-#        with:
-#          model: 'iPhone 14'
-
-#      - name: Setup Java
-#        uses: actions/setup-java@v1
-#        with:
-#          java-version: '12.x'
-
-      - name: Setup Flutter 3.22.3
-        uses: subosito/flutter-action@v1
+      - uses: actions/checkout@v3
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.3'
-
-      - run: flutter pub get
-
-      - name: Run UI Tests
+          channel: stable
+          # instead of "channel: stable", you could be more precise by specifying the exact version of Flutter you're using:
+          # flutter-version: '<FLUTTER_VERSION>'
+      - name: Install Flutter dependencies
+        run: flutter pub get
+      - name: Run integration tests
+        # more info on https://github.com/ReactiveCircus/android-emulator-runner
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 31
+          api-level: ${{ matrix.api-level }}
+          arch: x86_64
           profile: Nexus 6
-          arch: arm64-v8a
-          force-avd-creation: false
-          avd-name: macOS-avd-arm64-v8a-31
-          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: true
-          script: flutter test integration_test/tests/create_tests.dart
-
-#      - run: flutter test integration_test/tests/create_tests.dart
+          script: flutter test integration_test
