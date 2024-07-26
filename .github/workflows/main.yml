@@ -40,3 +40,5 @@ jobs:
       - run: adb devices
       - run: echo $ANDROID_HOME
       - run: ./tool/flutter_ci_script.sh
+#      - run: ./tool/flutter_ci_script.sh
+#      - run: ./tool/flutter_ci_script.sh
