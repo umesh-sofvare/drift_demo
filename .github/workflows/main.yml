@@ -28,12 +28,12 @@ jobs:
 
   android:
     runs-on: macos-13
-    strategy:
-      matrix:
-        api-level:
-          - 29
-          # you can add more API level if you want to run your tests on different API
-      fail-fast: true
+#    strategy:
+#      matrix:
+#        api-level:
+#          - 29
+#          # you can add more API level if you want to run your tests on different API
+#      fail-fast: true
     steps:
       - name: Checkout
         uses: actions/checkout@v3
