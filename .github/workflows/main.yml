@@ -7,38 +7,24 @@ on:
     branches: [ master ]
 
 jobs:
-#  flutter-tests:
-#    runs-on: macos-13
-#    strategy:
-#      matrix:
-#        api-level: [29]
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#
-##      - uses: futureware-tech/simulator-action@v3
-##        with:
-##          model: 'iPhone 14'
-#
-##      - name: Setup Java
-##        uses: actions/setup-java@v1
-##        with:
-##          java-version: '12.x'
-#
-#      - name: Setup Flutter 3.22.3
-#        uses: subosito/flutter-action@v1
-#        with:
-#          flutter-version: '3.22.3'
-#
-#      - run: flutter pub get
-#
-#      - name: run tests
-#        uses: reactivecircus/android-emulator-runner@v2
-#        with:
-#          api-level: 29
-#          script: flutter test integration_test/tests/create_tests.dart
+  ios-flutter-tests:
+    runs-on: macos-latest
 
-#      - run: flutter test integration_test/tests/create_tests.dart
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: futureware-tech/simulator-action@v3
+        with:
+          model: 'iPhone 14'
+
+      - name: Setup Flutter 3.22.3
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.22.3'
+
+      - run: flutter pub get
+      - run: flutter test integration_test/tests/create_tests.dart
 
   android:
     runs-on: macos-13
