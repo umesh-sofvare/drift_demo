@@ -36,6 +36,6 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
-          script: ./gradlew connectedCheck
+          script: flutter test integration_test/tests/create_tests.dart
 
 #      - run: flutter test integration_test/tests/create_tests.dart
