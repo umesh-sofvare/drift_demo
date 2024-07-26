@@ -30,15 +30,3 @@ jobs:
           cache: true
           cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
           cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch: '
-      - uses: malinskiy/action-android/emulator-run-cmd@release/0.1.1
-        with:
-          cmd: flutter doctor -v
-          api: 25
-          tag: default
-          abi: x86
-      - run: sdkmanager platform-tools
-      - run: adb devices
-      - run: echo $ANDROID_HOME
-      - run: ./tool/flutter_ci_script.sh
-#      - run: ./tool/flutter_ci_script.sh
-#      - run: ./tool/flutter_ci_script.sh
