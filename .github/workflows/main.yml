@@ -24,45 +24,36 @@ jobs:
           flutter-version: '3.22.3'
 
       - run: flutter pub get
-#      - run: flutter test integration_test/tests/create_tests.dart
+      - run: flutter test integration_test/tests/create_tests.dart
 
-      # Build ipa.
-      - run: flutter build ios
+  android:
+    runs-on: macos-13
+#    strategy:
+#      matrix:
+#        api-level:
+#          - 29
+#          # you can add more API level if you want to run your tests on different API
+#      fail-fast: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-        # Upload generated apk to the artifacts.
-      - uses: actions/upload-artifact@v1
+      - name: Setup Flutter 3.22.3
+        uses: subosito/flutter-action@v1
         with:
-          name: release-ipa
-          path: build/ios/ipa/App-dev.ipa
+          flutter-version: '3.22.3'
 
-#  android:
-#    runs-on: macos-13
-##    strategy:
-##      matrix:
-##        api-level:
-##          - 29
-##          # you can add more API level if you want to run your tests on different API
-##      fail-fast: true
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#
-#      - name: Setup Flutter 3.22.3
-#        uses: subosito/flutter-action@v1
-#        with:
-#          flutter-version: '3.22.3'
-#
-#      - name: flutter pub get
-#        run: flutter pub get
-#
-##      - name: Run integration tests
-##        uses: reactivecircus/android-emulator-runner@v2
-##        with:
-##          api-level: ${{ matrix.api-level }}
-##          arch: x86_64
-##          profile: Nexus 6
-##          script: flutter test integration_test/tests/create_tests.dart
-#
+      - name: flutter pub get
+        run: flutter pub get
+
+      - name: Run integration tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          arch: x86_64
+          profile: Nexus 6
+          script: flutter test integration_test/tests/create_tests.dart
+
 #      # Build apk.
 #      - run: flutter build apk
 #
