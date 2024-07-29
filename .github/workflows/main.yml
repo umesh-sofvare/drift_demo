@@ -27,7 +27,7 @@ jobs:
 #      - run: flutter test integration_test/tests/create_tests.dart
 
       # Build ipa.
-      - run: flutter build build ios
+      - run: flutter build ios
 
         # Upload generated apk to the artifacts.
       - uses: actions/upload-artifact@v1
