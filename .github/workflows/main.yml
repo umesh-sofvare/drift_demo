@@ -26,10 +26,6 @@ jobs:
       - run: flutter pub get
 #      - run: flutter test integration_test/tests/create_tests.dart
 
-      - run: cd ios
-      - run: pod install
-      - run: cd ..
-
       # Build ipa.
       - run: flutter build ios
 
@@ -37,7 +33,7 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: release-ipa
-          path: build/app/outputs/apk/release/app-release.ipa
+          path: build/ios/ipa/App-dev.ipa
 
 #  android:
 #    runs-on: macos-13
