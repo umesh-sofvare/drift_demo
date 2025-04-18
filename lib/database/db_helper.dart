@@ -91,6 +91,22 @@ class DBHelper {
 
   }
 
+  Future<Employee?> getLastEmpRecord() async{
+
+    final query = (database.employees.select())
+      ..orderBy([(t) => OrderingTerm(expression: t.id,mode: OrderingMode.desc)])
+      ..limit(1);
+
+
+    List<Employee> employees = await query.get();
+    if(employees.isEmpty){
+      return null;
+    }
+
+    return employees.first;
+
+  }
+
   Future deleteEmployeeById({required int id}) async {
     return database.employees.deleteWhere((tbl) => tbl.id.equals(id));
   }
