@@ -28,6 +28,8 @@ jobs:
 
   android:
     runs-on: macos-13
+    permissions:
+      contents: write
     strategy:
       matrix:
         api-level:
